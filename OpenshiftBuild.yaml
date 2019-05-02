@@ -1,0 +1,8 @@
+---
+- name: Openshift Build
+  hosts: localhost
+  tasks:
+  - name: create project
+    shell: oc new-project marketingtemplateapp-build || oc project marketingtemplateapp-build
+  - name: build the image
+    shell: oc delete is marketingtemplateapp --ignore-not-found=true && oc delete bc marketingtemplateapp --ignore-not-found=true && sleep 5 && oc new-build --binary=true --name marketingtemplateapp --allow-missing-imagestream-tags=true && oc start-build --follow --from-dir . marketingtemplateapp

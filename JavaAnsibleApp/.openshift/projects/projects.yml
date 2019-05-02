@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: List
+items:
+- kind: ProjectRequest
+  apiVersion: v1
+  metadata:
+    name: sample-tomcat-dev
+    creationTimestam: null
+  displayName: Basic Tomcat1 App - Dev
+- kind: ProjectRequest
+  apiVersion: v1
+  metadata:
+    name: sample-tomcat-stage
+    creationTimestam: null
+  displayName: Basic Tomcat1 App - Stage
+- kind: ProjectRequest
+  apiVersion: v1
+  metadata:
+    name: sample-tomcat-prod
+    creationTimestam: null
+  displayName: Basic Tomcat1 App - Prod
+- kind: ProjectRequest
+  apiVersion: v1
+  metadata:
+    name: sample-tomcat-build
+    creationTimestam: null
+displayName: Basic Tomcat1 App - Build

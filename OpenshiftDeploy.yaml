@@ -1,0 +1,18 @@
+---
+- name: openshift deployment
+  hosts: localhost
+  tasks:
+  - name: create project for deployment
+    shell: oc new-project marketingtemplateapp-deploy || oc project marketingtemplateapp-deploy
+  - name: create policy to be able to pull the image from a different project
+    shell: oc policy add-role-to-user system:image-puller system:serviceaccount:marketingtemplateapp-deploy:default --namespace=marketingtemplateapp-build
+  - name: delete existing resources
+    shell: oc delete dc marketingtemplateapp --ignore-not-found=true && oc delete is marketingtemplateapp --ignore-not-found=true && oc delete svc marketingtemplateapp --ignore-not-found=true && oc delete route marketingtemplateapp --ignore-not-found=true && sleep 20
+  - name: specify the image repo to pull from
+    shell: oc new-app marketingtemplateapp-build/marketingtemplateapp --allow-missing-imagestream-tags=true
+  - name: delete services created if any
+    shell: oc delete svc marketingtemplateapp --ignore-not-found=true && sleep 5
+  - name: expose the deployment config using load balancer
+    shell: oc expose dc marketingtemplateapp --type=LoadBalancer
+  - name: expose the service
+    shell: oc expose service/marketingtemplateapp
